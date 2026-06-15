@@ -42,8 +42,8 @@ export default function BancaPorInternetSimulada() {
   };
 
   const handleKeypadClick = (num: string) => {
-    speak(num);
     if (focusedField === 'dni') {
+      speak(num);
       if (dni.length < 8) setDni(prev => prev + num);
     } else if (focusedField === 'card') {
       if (cardNumber.replace(/\s/g, '').length < 16) {
@@ -57,8 +57,8 @@ export default function BancaPorInternetSimulada() {
   };
 
   const handleBackspace = () => {
-    speak("Borrar");
     if (focusedField === 'dni') {
+      speak("Borrar");
       setDni(prev => prev.slice(0, -1));
     } else if (focusedField === 'card') {
       const raw = cardNumber.replace(/\s/g, '').slice(0, -1);
@@ -70,10 +70,14 @@ export default function BancaPorInternetSimulada() {
   };
 
   const handleClear = () => {
-    speak("Limpiar todo");
-    if (focusedField === 'dni') setDni('');
-    else if (focusedField === 'card') setCardNumber('');
-    else if (focusedField === 'password') setPassword('');
+    if (focusedField === 'dni') {
+      speak("Limpiar todo");
+      setDni('');
+    } else if (focusedField === 'card') {
+      setCardNumber('');
+    } else if (focusedField === 'password') {
+      setPassword('');
+    }
   };
 
   const handleLoginSubmit = (e: React.FormEvent) => {
