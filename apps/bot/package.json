@@ -1,0 +1,24 @@
+{
+  "name": "bot",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "@credinacion/core-models": "workspace:*",
+    "@credinacion/ai-agents": "workspace:*",
+    "telegraf": "^4.16.3",
+    "dotenv": "^16.4.5",
+    "axios": "^1.6.8",
+    "@google/generative-ai": "^0.11.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5",
+    "ts-node-dev": "^2.0.0",
+    "tsx": "^4.11.0",
+    "@types/node": "^20.12.12"
+  }
+}

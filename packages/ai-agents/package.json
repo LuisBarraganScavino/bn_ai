@@ -1,0 +1,18 @@
+{
+  "name": "@credinacion/ai-agents",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc -w"
+  },
+  "dependencies": {
+    "@credinacion/core-models": "workspace:*",
+    "@langchain/core": "^0.2.0",
+    "@langchain/google-genai": "^0.0.15",
+    "@langchain/langgraph": "^0.0.28"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5"
+  }
+}

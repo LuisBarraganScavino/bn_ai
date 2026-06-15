@@ -1,0 +1,17 @@
+{
+  "name": "credinacion-workspace",
+  "version": "1.0.0",
+  "private": true,
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "dev:bot": "pnpm --filter bot dev",
+    "dev:web": "pnpm --filter web dev",
+    "build": "pnpm -r run build",
+    "lint": "pnpm -r run lint"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5"
+  }
+}
