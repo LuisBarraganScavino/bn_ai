@@ -105,6 +105,16 @@ export default function TramitePage() {
   
   const synthRef = useRef<SpeechSynthesis | null>(null);
 
+  const isCronogramaPage = tipoTramite === 'cronograma' || tipoTramite === 'cronograma-publico';
+
+  // Read newsletter content aloud
+  const handleReadNewsletter = () => {
+    const textToRead = tipoTramite === 'cronograma'
+      ? "Boletín Informativo Mensual de la ONP. Calendario de Pagos. Si su DNI termina en cero o uno, cobra el Lunes siete de Junio. Si su DNI termina en dos o tres, cobra el Martes ocho de Junio. Si su DNI termina en cuatro o cinco, cobra el Miércoles nueve de Junio. Si su DNI termina en seis, siete, ocho o nueve, cobra el Jueves diez de Junio de este mes. Recuerde gestionar su cuenta desde su hogar de forma segura ingresando a la Banca por Internet oficial."
+      : "Boletín Informativo Mensual del Sector Público Ley diecinueve nueve noventa. El cobro para Educación y Salud es el Viernes once de Junio. El cobro para Interior y Defensa es el Lunes catorce de Junio. El cobro para Otros Ministerios es el Martes quince de Junio. Y para Jubilados del Sector Público es el Miércoles dieciséis de Junio de este mes. Recuerde gestionar su cuenta desde su hogar de forma segura ingresando a la Banca por Internet oficial.";
+    readAloud(textToRead);
+  };
+
   useEffect(() => {
     if (typeof window !== 'undefined') {
       synthRef.current = window.speechSynthesis;
@@ -128,6 +138,142 @@ export default function TramitePage() {
       synthRef.current.speak(utterance);
     }
   };
+
+  if (isCronogramaPage) {
+    const isPublic = tipoTramite === 'cronograma-publico';
+    return (
+      <main className="flex-grow bg-[#f8fafc] p-4 md:p-12 relative overflow-hidden flex flex-col items-center">
+        {/* Glow Effects */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-64 bg-gradient-to-b from-[#1d2b4a]/10 to-transparent rounded-full blur-[100px] pointer-events-none"></div>
+
+        {/* Newsletter Outer Card */}
+        <div className="z-10 w-full max-w-4xl bg-white rounded-[32px] shadow-premium overflow-hidden border border-gray-150 animate-fade-in flex flex-col">
+          {/* Header Banner */}
+          <div className="w-full bg-[#111827] text-gray-400 py-3.5 px-6 text-xs font-semibold flex items-center justify-between border-b border-gray-800">
+            <span className="tracking-wide uppercase text-gray-300">Boletín Oficial de Pagos</span>
+            <span>Junio 2026</span>
+          </div>
+
+          {/* Main Newsletter Content */}
+          <div className="p-6 md:p-12 flex flex-col gap-8">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 pb-6 border-b border-gray-100">
+              <div>
+                <span className="text-red-600 font-extrabold text-sm uppercase tracking-widest">Edición Especial Adulto Mayor</span>
+                <h1 className="text-3xl md:text-5xl font-black text-[#1d2b4a] mt-1 tracking-tight">
+                  {isPublic ? 'Calendario Oficial: Sector Público' : 'Calendario Oficial: Pensionistas ONP'}
+                </h1>
+              </div>
+
+              {/* Read Aloud button */}
+              <button 
+                onClick={handleReadNewsletter}
+                className="bg-[#1d2b4a] hover:bg-[#152037] text-white p-4 px-6 rounded-2xl transition-all flex items-center gap-3 font-extrabold shadow-md hover:shadow-lg active:scale-[0.97]"
+              >
+                <svg className="w-6 h-6 animate-bounce" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+                </svg>
+                🔊 Escuchar Boletín por Voz
+              </button>
+            </div>
+
+            {/* Audio Wave Indicator */}
+            {isPlayingAudio && (
+              <div className="flex items-center gap-1.5 p-3.5 bg-red-50 border border-red-100 rounded-2xl">
+                <span className="text-xs text-red-600 font-bold uppercase tracking-wider mr-2">Narrando Boletín:</span>
+                <div className="w-1.5 h-4 bg-red-600 rounded-full animate-[pulse_0.8s_infinite]"></div>
+                <div className="w-1.5 h-6 bg-red-600 rounded-full animate-[pulse_0.6s_infinite_0.1s]"></div>
+                <div className="w-1.5 h-5 bg-red-600 rounded-full animate-[pulse_0.7s_infinite_0.2s]"></div>
+                <div className="w-1.5 h-7 bg-red-600 rounded-full animate-[pulse_0.5s_infinite_0.3s]"></div>
+              </div>
+            )}
+
+            {/* Double column grid for Newsletter */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+              {/* Left Column: Calendar Cards */}
+              <div className="lg:col-span-7 flex flex-col gap-4">
+                <h2 className="text-xl font-extrabold text-[#1d2b4a] uppercase tracking-wider mb-2">📅 Fechas de Cobro Programadas</h2>
+                
+                {isPublic ? (
+                  <>
+                    <div className="bg-[#f8fafc] hover:bg-white hover:border-emerald-200 border-2 border-gray-150 p-5 rounded-2xl flex justify-between items-center transition-all shadow-sm">
+                      <span className="font-extrabold text-gray-700 text-lg">Educación y Salud</span>
+                      <span className="font-black text-emerald-700 text-xl">Viernes 11 de Junio</span>
+                    </div>
+                    <div className="bg-[#f8fafc] hover:bg-white hover:border-emerald-200 border-2 border-gray-150 p-5 rounded-2xl flex justify-between items-center transition-all shadow-sm">
+                      <span className="font-extrabold text-gray-700 text-lg">Interior y Defensa</span>
+                      <span className="font-black text-emerald-700 text-xl">Lunes 14 de Junio</span>
+                    </div>
+                    <div className="bg-[#f8fafc] hover:bg-white hover:border-emerald-200 border-2 border-gray-150 p-5 rounded-2xl flex justify-between items-center transition-all shadow-sm">
+                      <span className="font-extrabold text-gray-700 text-lg">Otros Ministerios</span>
+                      <span className="font-black text-emerald-700 text-xl">Martes 15 de Junio</span>
+                    </div>
+                    <div className="bg-[#f8fafc] hover:bg-white hover:border-emerald-200 border-2 border-gray-150 p-5 rounded-2xl flex justify-between items-center transition-all shadow-sm">
+                      <span className="font-extrabold text-gray-700 text-lg">Jubilados del Sector Público</span>
+                      <span className="font-black text-emerald-700 text-xl">Miércoles 16 de Junio</span>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="bg-[#f8fafc] hover:bg-white hover:border-emerald-200 border-2 border-gray-150 p-5 rounded-2xl flex justify-between items-center transition-all shadow-sm">
+                      <span className="font-extrabold text-gray-700 text-lg">DNI terminado en 0 y 1</span>
+                      <span className="font-black text-emerald-700 text-xl">Lunes 7 de Junio</span>
+                    </div>
+                    <div className="bg-[#f8fafc] hover:bg-white hover:border-emerald-200 border-2 border-gray-150 p-5 rounded-2xl flex justify-between items-center transition-all shadow-sm">
+                      <span className="font-extrabold text-gray-700 text-lg">DNI terminado en 2 y 3</span>
+                      <span className="font-black text-emerald-700 text-xl">Martes 8 de Junio</span>
+                    </div>
+                    <div className="bg-[#f8fafc] hover:bg-white hover:border-emerald-200 border-2 border-gray-150 p-5 rounded-2xl flex justify-between items-center transition-all shadow-sm">
+                      <span className="font-extrabold text-gray-700 text-lg">DNI terminado en 4 y 5</span>
+                      <span className="font-black text-emerald-700 text-xl">Miércoles 9 de Junio</span>
+                    </div>
+                    <div className="bg-[#f8fafc] hover:bg-white hover:border-emerald-200 border-2 border-gray-150 p-5 rounded-2xl flex justify-between items-center transition-all shadow-sm">
+                      <span className="font-extrabold text-gray-700 text-lg">DNI terminado en 6, 7, 8 y 9</span>
+                      <span className="font-black text-emerald-700 text-xl">Jueves 10 de Junio</span>
+                    </div>
+                  </>
+                )}
+              </div>
+
+              {/* Right Column: Safety Articles */}
+              <div className="lg:col-span-5 flex flex-col gap-5 bg-gray-50/50 p-6 rounded-3xl border border-gray-150">
+                <h2 className="text-xl font-extrabold text-[#1d2b4a] uppercase tracking-wider pb-2 border-b border-gray-200 font-black">📰 Recomendaciones</h2>
+                
+                <div className="flex flex-col gap-1.5">
+                  <h3 className="font-black text-gray-800 text-lg">🔒 Gestione su cuenta desde su hogar</h3>
+                  <p className="text-sm text-gray-500 font-semibold leading-relaxed">
+                    Evite el frío y las colas yendo a las agencias. Ingrese a la Banca por Internet segura para realizar transferencias y consultar sus saldos de forma inmediata.
+                  </p>
+                </div>
+
+                <div className="flex flex-col gap-1.5">
+                  <h3 className="font-black text-gray-800 text-lg">🤫 Su clave secreta es personal</h3>
+                  <p className="text-sm text-gray-500 font-semibold leading-relaxed">
+                    Nadie en el banco, ni por llamada, mensaje o correo electrónico, le solicitará su clave de internet o clave de su tarjeta MultiRed. Manténgala en absoluta reserva.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Footer Actions */}
+            <div className="flex flex-col sm:flex-row gap-4 pt-8 border-t border-gray-100">
+              <button 
+                onClick={() => { readAloud("Ingresando a la banca por internet oficial."); router.push('/banca-por-internet'); }}
+                className="flex-grow bg-red-600 hover:bg-red-700 text-white font-black text-2xl py-6 rounded-2xl shadow-lg transition-transform active:scale-[0.98] border border-red-500/20 flex items-center justify-center gap-3"
+              >
+                Ingresar a la Banca por Internet
+              </button>
+              <button 
+                onClick={() => router.push('/')}
+                className="bg-gray-100 hover:bg-gray-200 text-[#1d2b4a] font-black text-xl px-8 py-6 rounded-2xl transition-all"
+              >
+                Volver al Inicio
+              </button>
+            </div>
+          </div>
+        </div>
+      </main>
+    );
+  }
 
   const handleStart = () => {
     setIsStarted(true);
