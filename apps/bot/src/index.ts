@@ -43,12 +43,14 @@ bot.action('ACTION_B', async (ctx) => {
 
 bot.action('ACTION_C', async (ctx) => {
   await ctx.answerCbQuery();
-  await ctx.reply('El cronograma de pagos para este mes es:\n- DNI terminados en 0 y 1: Lunes 7\n- DNI terminados en 2 y 3: Martes 8\n- DNI terminados en 4 y 5: Miércoles 9');
+  const baseUrl = process.env.WEB_APP_URL || 'https://credinacion.app';
+  await ctx.reply(`¡Perfecto! Para revisar las fechas exactas de cobro del cronograma de este mes, ingresa a nuestro enlace seguro guiado por voz:\n👉 ${baseUrl}/tramite/cronograma`);
 });
 
 bot.action('ACTION_D', async (ctx) => {
   await ctx.answerCbQuery();
-  await ctx.reply('Para consultar sobre bonos activos (Fonavi, Bono Familiar), por favor visita: https://consultas.bonos.gob.pe');
+  const baseUrl = process.env.WEB_APP_URL || 'https://credinacion.app';
+  await ctx.reply(`¡Excelente! Para consultar los bonos activos del Estado (Fonavi, Bono Familiar) con total seguridad, ingresa aquí:\n👉 ${baseUrl}/tramite/bonos`);
 });
 
 bot.on('text', async (ctx) => {
@@ -71,10 +73,10 @@ bot.on('text', async (ctx) => {
        return await ctx.reply(`Excelente. Para conocer los requisitos e iniciar la solicitud de tu Préstamo MultiRed, ingresa a nuestra guía interactiva: \n👉 ${baseUrl}/tramite/prestamo`);
     }
     if (text === 'C') {
-       return await ctx.reply('El cronograma de pagos para este mes es:\n- DNI terminados en 0 y 1: Lunes 7\n- DNI terminados en 2 y 3: Martes 8\n- DNI terminados en 4 y 5: Miércoles 9');
+       return await ctx.reply(`¡Perfecto! Para revisar las fechas exactas de cobro del cronograma de este mes, ingresa a nuestro enlace seguro guiado por voz:\n👉 ${baseUrl}/tramite/cronograma`);
     }
     if (text === 'D') {
-       return await ctx.reply('Para consultar sobre bonos activos (Fonavi, Bono Familiar), por favor visita: https://consultas.bonos.gob.pe');
+       return await ctx.reply(`¡Excelente! Para consultar los bonos activos del Estado (Fonavi, Bono Familiar) con total seguridad, ingresa aquí:\n👉 ${baseUrl}/tramite/bonos`);
     }
     if (text === 'E') {
        return await ctx.reply('Por favor, cuéntame en un mensaje de texto o envíame un audio corto con tu consulta.');
@@ -92,7 +94,7 @@ bot.on('text', async (ctx) => {
     } else if (intent === 'TRANSACTION_LOAN') {
       await ctx.reply(`Parece que necesitas información sobre un préstamo. Ingresa a nuestra guía segura para ver los requisitos: \n👉 ${baseUrl}/tramite/prestamo`);
     } else if (intent === 'FAQ') {
-      await ctx.reply('El cronograma de pagos para este mes es:\n- DNI terminados en 0 y 1: Lunes 7\n- DNI terminados en 2 y 3: Martes 8\n- DNI terminados en 4 y 5: Miércoles 9');
+      await ctx.reply(`Para revisar el cronograma de pagos, horarios y consultas generales con voz, ingresa aquí:\n👉 ${baseUrl}/tramite/cronograma`);
     } else {
       await ctx.reply('No estoy seguro de haberte entendido. Usa estos botones por favor 👇', mainMenu);
     }

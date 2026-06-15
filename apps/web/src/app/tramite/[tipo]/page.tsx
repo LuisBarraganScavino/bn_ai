@@ -24,6 +24,28 @@ const GUIDES: Record<string, { title: string; icon: string; steps: string[] }> =
       "Paso 3: Muy importante: Por tu seguridad, nunca le des tu tarjeta ni le digas tu clave secreta a personas extrañas en la calle.",
       "Paso 4: Si necesitas ayuda con el cajero automático, pídesela únicamente a los orientadores del banco que usan chaleco oficial."
     ]
+  },
+  cronograma: {
+    title: 'Cronograma de Pagos Mensual',
+    icon: '📅',
+    steps: [
+      "Paso 1: Ubica el último número de tu DNI. Este número determinará el día exacto en que te corresponde cobrar.",
+      "Paso 2: Si tu DNI termina en cero o uno, te corresponde cobrar el Lunes siete de este mes.",
+      "Paso 3: Si tu DNI termina en dos o tres, te corresponde cobrar el Martes ocho de este mes.",
+      "Paso 4: Si tu DNI termina en cuatro o cinco, te corresponde cobrar el Miércoles nueve de este mes.",
+      "Paso 5: Si tu DNI termina en seis, siete, ocho o nueve, te corresponde cobrar el Jueves diez de este mes.",
+      "Paso 6: Te recomendamos ir al banco acompañado por un familiar de confianza y evitar llevar grandes sumas de dinero en efectivo."
+    ]
+  },
+  bonos: {
+    title: 'Ayudas Sociales y Bonos del Estado',
+    icon: '🤝',
+    steps: [
+      "Paso 1: Entérate sobre los apoyos disponibles. El Estado brinda el Bono Familiar y Fonavi a través de canales autorizados.",
+      "Paso 2: Ten listo tu número de DNI y la fecha de emisión del mismo. Te lo pedirán para consultar si eres beneficiario.",
+      "Paso 3: Recuerda que todas las consultas de bonos son totalmente gratuitas y no necesitas pagar a tramitadores.",
+      "Paso 4: Para verificar tu bono con total seguridad, puedes ingresar al portal oficial del gobierno o acudir a un orientador oficial dentro del Banco de la Nación."
+    ]
   }
 };
 
