@@ -44,7 +44,7 @@ export default function Home() {
 
             <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
               <a 
-                href="https://t.me/CrediNacion_bot" 
+                href="https://t.me/CrediNacionv2_bot" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="bg-white text-[#1d2b4a] font-extrabold text-lg py-4.5 px-8 rounded-2xl shadow-[0_20px_40px_rgba(255,255,255,0.06)] flex items-center justify-center gap-3 w-full sm:w-fit hover:bg-gray-100 active:scale-[0.98] transition-all border border-white/20"
