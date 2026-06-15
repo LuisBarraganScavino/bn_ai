@@ -6,45 +6,44 @@ import { useParams, useRouter } from 'next/navigation';
 
 const GUIDES: Record<string, { title: string; icon: string; steps: string[] }> = {
   prestamo: {
-    title: 'Guía de Préstamos MultiRed',
+    title: 'Trámite de Préstamos MultiRed',
     icon: '💳',
     steps: [
-      "Paso 1: Reúne tus documentos. Necesitas tener a la mano tu DNI físico y original.",
-      "Paso 2: Busca tu última boleta de pago de pensión. El banco la necesitará para calcular cuánto dinero pueden prestarte.",
-      "Paso 3: Dirígete a la ventanilla de cualquier agencia del Banco de la Nación en horario de atención.",
-      "Paso 4: ¡Eso es todo! Si aprueban tu préstamo, el dinero será depositado en tu cuenta de forma segura."
+      "Paso 1: ¡Evita colas! Ahora puedes solicitar tu Préstamo de forma digital y segura desde tu hogar.",
+      "Paso 2: Ingresa a la Banca por Internet oficial buscando la dirección bancaporinternet.bn.com.pe en tu navegador de confianza.",
+      "Paso 3: Recuerda que para ingresar a la Banca por Internet necesitarás tu tarjeta MultiRed y tu clave secreta de internet.",
+      "Paso 4: Una vez dentro, busca la sección de Préstamos y simula tu monto. El dinero aprobado será depositado de inmediato y con total seguridad en tu cuenta."
     ]
   },
   onp: {
-    title: 'Información de Retiro de Pensión',
+    title: 'Trámite de Retiro de Pensión',
     icon: '👴',
     steps: [
-      "Paso 1: Ten a la mano tu tarjeta MultiRed. Mantenla guardada en un lugar seguro hasta que llegues al banco.",
-      "Paso 2: Para retirar tu dinero, puedes usar los cajeros automáticos o ir directamente a la ventanilla dentro de la agencia.",
-      "Paso 3: Muy importante: Por tu seguridad, nunca le des tu tarjeta ni le digas tu clave secreta a personas extrañas en la calle.",
-      "Paso 4: Si necesitas ayuda con el cajero automático, pídesela únicamente a los orientadores del banco que usan chaleco oficial."
+      "Paso 1: Cobrar tu pensión es más seguro desde casa. No es necesario que te expongas yendo físicamente al banco.",
+      "Paso 2: Usa la Banca por Internet oficial ingresando a bancaporinternet.bn.com.pe desde tu computadora o celular.",
+      "Paso 3: Podrás consultar tu saldo gratis y realizar transferencias o pagos de servicios sin gastar en transporte ni hacer largas colas.",
+      "Paso 4: Recuerda: El Banco de la Nación nunca te pedirá tus claves por teléfono ni por correo electrónico. Mantén tus claves siempre en privado."
     ]
   },
   cronograma: {
-    title: 'Cronograma de Pagos Mensual',
+    title: 'Información del Cronograma de Pagos',
     icon: '📅',
     steps: [
-      "Paso 1: Ubica el último número de tu DNI. Este número determinará el día exacto en que te corresponde cobrar.",
-      "Paso 2: Si tu DNI termina en cero o uno, te corresponde cobrar el Lunes siete de este mes.",
-      "Paso 3: Si tu DNI termina en dos o tres, te corresponde cobrar el Martes ocho de este mes.",
-      "Paso 4: Si tu DNI termina en cuatro o cinco, te corresponde cobrar el Miércoles nueve de este mes.",
-      "Paso 5: Si tu DNI termina en seis, siete, ocho o nueve, te corresponde cobrar el Jueves diez de este mes.",
-      "Paso 6: Te recomendamos ir al banco acompañado por un familiar de confianza y evitar llevar grandes sumas de dinero en efectivo."
+      "Paso 1: Conocer tu fecha de pago es muy sencillo y puedes hacerlo por internet sin salir a la calle.",
+      "Paso 2: Toda la información oficial de fechas de pago está publicada en el portal oficial del banco en www.bn.com.pe.",
+      "Paso 3: Para tu comodidad, si tu DNI termina en cero o uno, cobras el Lunes siete. Si termina en dos o tres, cobras el Martes ocho.",
+      "Paso 4: Si tu DNI termina en cuatro o cinco, cobras el Miércoles nueve. Y si termina en seis, siete, ocho o nueve, cobras el Jueves diez de este mes.",
+      "Paso 5: Recuerda que puedes ver este calendario completo ingresando a www.bn.com.pe en la sección de campañas y pagos."
     ]
   },
   bonos: {
-    title: 'Ayudas Sociales y Bonos del Estado',
+    title: 'Información de Ayudas y Bonos',
     icon: '🤝',
     steps: [
-      "Paso 1: Entérate sobre los apoyos disponibles. El Estado brinda el Bono Familiar y Fonavi a través de canales autorizados.",
-      "Paso 2: Ten listo tu número de DNI y la fecha de emisión del mismo. Te lo pedirán para consultar si eres beneficiario.",
-      "Paso 3: Recuerda que todas las consultas de bonos son totalmente gratuitas y no necesitas pagar a tramitadores.",
-      "Paso 4: Para verificar tu bono con total seguridad, puedes ingresar al portal oficial del gobierno o acudir a un orientador oficial dentro del Banco de la Nación."
+      "Paso 1: No vayas al banco a preguntar por bonos. Evitemos las aglomeraciones buscando la información oficial por internet.",
+      "Paso 2: Para informarte de forma segura sobre los bonos activos como Fonavi o ayuda social, ingresa al portal del banco en www.bn.com.pe.",
+      "Paso 3: Allí encontrarás los enlaces directos y seguros a las páginas de consulta del Estado donde solo con tu DNI podrás saber si eres beneficiario.",
+      "Paso 4: Consejo de seguridad: El banco nunca envía enlaces de bonos por mensajes de texto sospechosos. Infórmate siempre desde www.bn.com.pe."
     ]
   }
 };
@@ -54,6 +53,10 @@ export default function TramitePage() {
   const router = useRouter();
   const tipoTramite = (params?.tipo as string) || 'onp';
   const guideData = GUIDES[tipoTramite] || GUIDES['onp'];
+
+  const isTramite = tipoTramite === 'prestamo' || tipoTramite === 'onp';
+  const actionLink = isTramite ? 'https://bancaporinternet.bn.com.pe/' : 'https://www.bn.com.pe/';
+  const linkLabel = isTramite ? 'Ir a la Banca por Internet' : 'Ir al Portal www.bn.com.pe';
 
   const [isStarted, setIsStarted] = useState(false);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
@@ -76,7 +79,7 @@ export default function TramitePage() {
       synthRef.current.cancel();
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.lang = 'es-PE';
-      utterance.rate = 0.85; // Speed slightly reduced for better comprehension
+      utterance.rate = 0.85; // Paused rate for adult mayor comprehension
       
       utterance.onstart = () => setIsPlayingAudio(true);
       utterance.onend = () => setIsPlayingAudio(false);
@@ -98,7 +101,10 @@ export default function TramitePage() {
       readAloud(guideData.steps[nextIndex]);
     } else {
       setIsFinished(true);
-      readAloud("Has terminado la guía. Ya estás listo para ir al banco de forma segura. Puedes cerrar esta página o volver al inicio.");
+      const finishMessage = isTramite 
+        ? "Has terminado la guía. Ya estás listo para ingresar a la Banca por Internet de forma segura presionando el botón rojo de abajo."
+        : "Has terminado la guía. Ya estás listo para ingresar al portal oficial del banco para informarte presionando el botón azul de abajo.";
+      readAloud(finishMessage);
     }
   };
 
@@ -125,7 +131,7 @@ export default function TramitePage() {
           </h1>
           
           <p className="text-lg md:text-xl mb-10 text-gray-500 font-semibold max-w-md mx-auto leading-relaxed">
-            Te guiaremos paso a paso por voz. Toca el botón una vez para escuchar de qué trata, y <span className="text-[#1d2b4a] font-bold underline decoration-red-500 decoration-2">tócalo dos veces</span> para empezar la guía.
+            Te guiaremos paso a paso para realizarlo por internet sin salir de casa. Toca el botón una vez para escuchar de qué trata, y <span className="text-[#1d2b4a] font-bold underline decoration-red-500 decoration-2">tócalo dos veces</span> para empezar.
           </p>
           
           <div className="flex justify-center mb-6">
@@ -159,16 +165,38 @@ export default function TramitePage() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="4.5" d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <h2 className="text-3xl md:text-4xl font-black text-emerald-950 mb-4 tracking-tight">¡Excelente Trabajo!</h2>
+          
+          <h2 className="text-3xl md:text-4xl font-black text-emerald-950 mb-4 tracking-tight">¡Estás Listo!</h2>
+          
           <p className="text-lg md:text-xl text-emerald-800 font-semibold mb-10 leading-relaxed max-w-md mx-auto">
-            Ya tienes toda la información necesaria para hacer tu consulta o trámite con total seguridad. ¡Estamos para servirte!
+            {isTramite 
+              ? "Ya sabes cómo usar la Banca por Internet con total seguridad. Presiona el botón de abajo para ir al portal seguro de trámites."
+              : "Ya sabes cómo informarte de forma segura por internet. Presiona el botón de abajo para ir al portal oficial de información."}
           </p>
-          <button 
-            onClick={() => router.push('/')} 
-            className="w-full bg-[#1d2b4a] hover:bg-[#152037] text-white text-2xl font-extrabold py-6 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform active:scale-[0.98] border border-white/10"
-          >
-            Finalizar y Volver
-          </button>
+
+          <div className="flex flex-col gap-4 w-full">
+            <a 
+              href={actionLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => readAloud(`Redirigiendo de forma segura a ${isTramite ? 'la banca por internet' : 'el portal de información'} del Banco de la Nación.`)}
+              className={`w-full text-white text-2xl font-black py-6 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform active:scale-[0.98] border border-white/10 flex items-center justify-center gap-2 ${
+                isTramite ? 'bg-red-600 hover:bg-red-700' : 'bg-blue-600 hover:bg-blue-700'
+              }`}
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+              {linkLabel}
+            </a>
+
+            <button 
+              onClick={() => router.push('/')} 
+              className="w-full bg-gray-100 hover:bg-gray-200 text-[#1d2b4a] text-xl font-bold py-5 rounded-2xl transition-all"
+            >
+              Volver al Inicio
+            </button>
+          </div>
         </div>
       </main>
     );
