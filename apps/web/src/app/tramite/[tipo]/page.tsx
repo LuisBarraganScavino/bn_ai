@@ -166,43 +166,4 @@ export default function TramitePage() {
       </div>
     </main>
   );
-}      
-      <div className="z-10 w-full max-w-2xl bg-white rounded-3xl shadow-premium p-6 md:p-12 text-center border border-gray-100 mt-2 md:mt-0">
-        <div className="w-16 h-16 md:w-20 md:h-20 mx-auto bg-gray-50 rounded-full flex items-center justify-center mb-6 shadow-sm border border-gray-100">
-          {isPrestamo ? (
-            <svg className="w-10 h-10 text-bnRed" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-          ) : (
-            <svg className="w-10 h-10 text-bnRed" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-            </svg>
-          )}
-        </div>
-
-        <h1 className="text-3xl md:text-4xl font-extrabold text-bnBlue mb-4 tracking-tight">
-          {isPrestamo ? 'Guía de Préstamos' : 'Información de Pensión'}
-        </h1>
-        
-        <p className="text-lg md:text-xl mb-10 text-gray-500 font-medium max-w-lg mx-auto">
-          Te explicaremos paso a paso lo que necesitas saber. Toca el botón una vez para escuchar de qué trata. <strong className="text-gray-800">Toca dos veces</strong> para confirmar y empezar.
-        </p>
-        
-        <div className="flex justify-center">
-          <DoubleTouchButton 
-            label={isPrestamo ? "Ver Requisitos de Préstamo" : "Ver Guía de Pensión"}
-            actionDescription={`Botón para ${isPrestamo ? 'escuchar los requisitos del préstamo' : 'conocer cómo tramitar tu pensión'}. Toca de nuevo para confirmar y abrir la guía validada por el Banco de la Nación.`}
-            onClick={handleAction}
-          />
-        </div>
-      </div>
-      
-      <div className="mt-8 text-center text-sm text-gray-400 font-medium flex items-center justify-center gap-2">
-        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-          <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
-        </svg>
-        Entorno Seguro encriptado de extremo a extremo
-      </div>
-    </main>
-  );
 }
