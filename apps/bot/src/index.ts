@@ -53,6 +53,27 @@ bot.action('ACTION_D', async (ctx) => {
   await ctx.reply(`¡Excelente! Para consultar los bonos activos del Estado (Fonavi, Bono Familiar) con total seguridad, ingresa aquí:\n👉 ${baseUrl}/tramite/bonos`);
 });
 
+async function handleUserIntent(ctx: any, queryText: string) {
+  try {
+    const intent = await routeIntent(queryText);
+    const baseUrl = process.env.WEB_APP_URL || 'https://credinacion.app';
+    
+    if (intent === 'TRANSACTION_WITHDRAWAL') {
+      await ctx.reply(`Parece que tienes consultas sobre tu pensión o retiro. Ingresa aquí para recibir asistencia guiada paso a paso: \n👉 ${baseUrl}/tramite/onp`);
+    } else if (intent === 'TRANSACTION_LOAN') {
+      await ctx.reply(`Parece que necesitas información sobre un préstamo. Ingresa a nuestra guía segura para ver los requisitos: \n👉 ${baseUrl}/tramite/prestamo`);
+    } else if (intent === 'FAQ') {
+      await ctx.reply(`Para revisar el cronograma de pagos, horarios y consultas generales con voz, ingresa aquí:\n👉 ${baseUrl}/tramite/cronograma`);
+    } else {
+      // Intención UNKNOWN: Respuesta amigable y orientadora con los botones principales
+      await ctx.reply('¡Hola! Sí, te escucho fuerte y claro. 🎙️😊 Te puedo apoyar con cualquiera de las opciones de los botones de abajo 👇', mainMenu);
+    }
+  } catch (error) {
+    console.error('Routing Error:', error);
+    await ctx.reply('Disculpa, tuvimos un problema de conexión. 🔌 ¿Me lo repites de nuevo, por favor? 🙏');
+  }
+}
+
 bot.on('text', async (ctx) => {
   if (!ctx.message || !('text' in ctx.message)) return;
   const rawText = ctx.message.text;
@@ -84,35 +105,19 @@ bot.on('text', async (ctx) => {
   }
 
   // Fallback to AI Routing for normal text
-  try {
-    await ctx.reply('Procesando tu consulta...');
-    const intent = await routeIntent(rawText);
-    const baseUrl = process.env.WEB_APP_URL || 'https://credinacion.app';
-    
-    if (intent === 'TRANSACTION_WITHDRAWAL') {
-      await ctx.reply(`Parece que tienes consultas sobre tu pensión o retiro. Ingresa aquí para recibir asistencia guiada paso a paso: \n👉 ${baseUrl}/tramite/onp`);
-    } else if (intent === 'TRANSACTION_LOAN') {
-      await ctx.reply(`Parece que necesitas información sobre un préstamo. Ingresa a nuestra guía segura para ver los requisitos: \n👉 ${baseUrl}/tramite/prestamo`);
-    } else if (intent === 'FAQ') {
-      await ctx.reply(`Para revisar el cronograma de pagos, horarios y consultas generales con voz, ingresa aquí:\n👉 ${baseUrl}/tramite/cronograma`);
-    } else {
-      await ctx.reply('No estoy seguro de haberte entendido. Usa estos botones por favor 👇', mainMenu);
-    }
-  } catch (error) {
-    console.error('Routing Error:', error);
-    await ctx.reply('Disculpa, tuvimos un problema de conexión. 🔌 ¿Me lo repites de nuevo, por favor? 🙏');
-  }
+  await ctx.reply('Procesando tu consulta...');
+  await handleUserIntent(ctx, rawText);
 });
 
 bot.on('voice', async (ctx) => {
   try {
-    await ctx.reply('Escuchando tu audio...');
+    await ctx.reply('Escuchando tu audio... 🎙️');
     const fileId = ctx.message.voice.file_id;
     const transcribedText = await processVoiceMessage(ctx, fileId);
     await ctx.reply(`Transcripción: "${transcribedText}"`);
     
-    const intent = await routeIntent(transcribedText);
-    await ctx.reply(`Intención detectada: ${intent}`);
+    await ctx.reply('Procesando tu consulta...');
+    await handleUserIntent(ctx, transcribedText);
   } catch (err) {
     await ctx.reply('Hubo un problema procesando tu audio. Por favor intenta escribiendo.');
   }
