@@ -27,7 +27,7 @@ El sistema conecta de manera fluida la mensajería instantánea accesible con in
 ```
 
 ### Detalle del Flujo Paso a Paso:
-1. **Interacción Inicial (Telegram Bot):** El adulto mayor abre el canal oficial en Telegram `@CrediNacion_bot`. Puede interactuar mediante botones gigantes predefinidos, escribir texto o simplemente presionar el botón de micrófono y **enviar una nota de voz corta**.
+1. **Interacción Inicial (Telegram Bot):** El adulto mayor abre el canal oficial en Telegram `@CrediNacion_bot` e inicia la conversación ejecutando el comando `/start`. El bot responde de inmediato presentando un mensaje de bienvenida claro y un menú de botones gigantes predefinidos. A partir de ahí, el usuario puede interactuar tocando los botones, escribiendo texto o simplemente presionando el botón de micrófono para **enviar una nota de voz corta**.
 2. **Procesamiento de Voz Nativo (Gemini 2.5 Flash):**
    - El audio `.ogg` es extraído y enviado directamente en formato Base64 a **Gemini 2.5 Flash**, aprovechando sus capacidades multimodales de transcripción directa de audio al español con precisión impecable.
 3. **Clasificación Inteligente de Intenciones (LangChain + Gemini):**
