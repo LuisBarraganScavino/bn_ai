@@ -112,12 +112,12 @@ export default function BancaPorInternetSimulada() {
     }
 
     setPensionBalance(prev => prev - amountVal);
-    speak(`Transferencia exitosa de ${amountVal} soles realizada con éxito. Su nuevo saldo de cuenta es de ${pensionBalance - amountVal} soles.`);
+    speak("La transferencia de fondos se ha completado con éxito de forma segura.");
     setStep('transfer-success');
   };
 
   const handleLoanSubmit = () => {
-    speak(`Solicitud de préstamo de ${loanAmount} soles aprobada. El dinero ha sido depositado con total seguridad en su cuenta de ahorros.`);
+    speak("Su solicitud de préstamo ha sido aprobada con éxito. El abono se ha depositado de forma segura en su cuenta de ahorros.");
     setPensionBalance(prev => prev + loanAmount);
     setStep('loan-success');
   };
@@ -334,7 +334,7 @@ export default function BancaPorInternetSimulada() {
                       {[1000, 3000, 5000].map(val => (
                         <button 
                           key={val}
-                          onClick={() => { setLoanAmount(val); speak(`Seleccionó préstamo de ${val} soles.`); }}
+                          onClick={() => { setLoanAmount(val); speak("Monto de préstamo seleccionado."); }}
                           className={`py-4 rounded-xl font-extrabold text-lg border-2 active:scale-95 transition-all ${loanAmount === val ? 'bg-[#1d2b4a] border-[#1d2b4a] text-white shadow-md' : 'bg-gray-50 border-gray-200 text-[#1d2b4a] hover:bg-gray-100'}`}
                         >
                           S/ {val}
