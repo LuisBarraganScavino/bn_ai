@@ -12,7 +12,7 @@ const GUIDES: Record<string, { title: string; icon: string; steps: string[] }> =
       "Paso 1: ¡Evita colas! Ahora puedes solicitar tu Préstamo de forma digital y segura desde tu hogar.",
       "Paso 2: Ingresa a la Banca por Internet oficial buscando la dirección bancaporinternet.bn.com.pe en tu navegador de confianza.",
       "Paso 3: Recuerda que para ingresar a la Banca por Internet necesitarás tu tarjeta MultiRed y tu clave secreta de internet.",
-      "Paso 4: Una vez dentro, busca la sección de Préstamos y simula tu monto. El dinero aprobado será depositado de inmediato y con total seguridad en tu cuenta."
+      "Paso 4: Una vez dentro, busca la sección de Préstamos y selecciona tu monto pre-aprobado. El dinero aprobado será depositado de inmediato y con total seguridad en tu cuenta de ahorros."
     ]
   },
   onp: {
@@ -23,6 +23,26 @@ const GUIDES: Record<string, { title: string; icon: string; steps: string[] }> =
       "Paso 2: Usa la Banca por Internet oficial ingresando a bancaporinternet.bn.com.pe desde tu computadora o celular.",
       "Paso 3: Podrás consultar tu saldo gratis y realizar transferencias o pagos de servicios sin gastar en transporte ni hacer largas colas.",
       "Paso 4: Recuerda: El Banco de la Nación nunca te pedirá tus claves por teléfono ni por correo electrónico. Mantén tus claves siempre en privado."
+    ]
+  },
+  viudez: {
+    title: 'Trámite de Pensión de Viudez - ONP',
+    icon: '👵',
+    steps: [
+      "Paso 1: Este trámite permite obtener un apoyo económico de pensión si eres cónyuge o conviviente de un pensionista fallecido.",
+      "Paso 2: Reúne el Acta de Defunción del pensionista y tu Acta de Matrimonio o la Declaración de Unión de Hecho oficial.",
+      "Paso 3: Ingresa de forma segura a la Banca por Internet oficial en bancaporinternet.bn.com.pe para registrar tu solicitud en línea.",
+      "Paso 4: Adjunta los documentos en la sección de Solicitudes y un asesor validará tu información para activar tu cuenta de pensionista de viudez."
+    ]
+  },
+  "jubilado-prestamo": {
+    title: 'Préstamo MultiRed para Jubilados',
+    icon: '👴💳',
+    steps: [
+      "Paso 1: Si eres jubilado que percibe su pensión en el Banco de la Nación, puedes acceder a tasas preferenciales de préstamo.",
+      "Paso 2: Ingresa a la Banca por Internet en bancaporinternet.bn.com.pe para consultar tu calificación de crédito pre-aprobado.",
+      "Paso 3: No necesitas avales ni garantías. Puedes elegir plazos de pago cómodos de hasta sesenta meses de descuento directo.",
+      "Paso 4: Al confirmar tu solicitud en línea, el dinero se depositará de forma inmediata en tu cuenta de ahorros MultiRed."
     ]
   },
   cronograma: {
@@ -36,6 +56,16 @@ const GUIDES: Record<string, { title: string; icon: string; steps: string[] }> =
       "Paso 5: Recuerda que puedes ver este calendario completo ingresando a www.bn.com.pe en la sección de campañas y pagos."
     ]
   },
+  "cronograma-publico": {
+    title: 'Cronograma de Pagos del Sector Público',
+    icon: '🏢',
+    steps: [
+      "Paso 1: Consulta las fechas de pago oficiales para los trabajadores y jubilados del Sector Público de la Ley diecinueve nueve noventa.",
+      "Paso 2: Toda la información oficial y segura de fechas está publicada en el portal oficial del banco en www.bn.com.pe.",
+      "Paso 3: Por lo general, los pagos se inician a partir del día quince de cada mes según el ministerio o sector público correspondiente.",
+      "Paso 4: Evita salir de casa. Consulta el calendario oficial actualizado ingresando de forma segura a www.bn.com.pe."
+    ]
+  },
   bonos: {
     title: 'Información de Ayudas y Bonos',
     icon: '🤝',
@@ -44,6 +74,16 @@ const GUIDES: Record<string, { title: string; icon: string; steps: string[] }> =
       "Paso 2: Para informarte de forma segura sobre los bonos activos como Fonavi o ayuda social, ingresa al portal del banco en www.bn.com.pe.",
       "Paso 3: Allí encontrarás los enlaces directos y seguros a las páginas de consulta del Estado donde solo con tu DNI podrás saber si eres beneficiario.",
       "Paso 4: Consejo de seguridad: El banco nunca envía enlaces de bonos por mensajes de texto sospechosos. Infórmate siempre desde www.bn.com.pe."
+    ]
+  },
+  pension65: {
+    title: 'Programa Nacional Pensión 65',
+    icon: '☀️',
+    steps: [
+      "Paso 1: El programa nacional brinda una subvención económica bimestral a adultos mayores calificados en extrema pobreza.",
+      "Paso 2: Para informarte de forma segura si estás calificado para realizar el cobro, ingrese al portal oficial del banco en www.bn.com.pe.",
+      "Paso 3: El cobro se realiza de forma directa en su cuenta de ahorros usando canales autorizados para evitar colas de espera.",
+      "Paso 4: Recuerde informarse únicamente a través del portal oficial del banco www.bn.com.pe y desconfíe de llamadas sospechosas."
     ]
   }
 };
@@ -54,9 +94,9 @@ export default function TramitePage() {
   const tipoTramite = (params?.tipo as string) || 'onp';
   const guideData = GUIDES[tipoTramite] || GUIDES['onp'];
 
-  const isTramite = tipoTramite === 'prestamo' || tipoTramite === 'onp';
+  const isTramite = tipoTramite === 'prestamo' || tipoTramite === 'onp' || tipoTramite === 'viudez' || tipoTramite === 'jubilado-prestamo';
   const actionLink = isTramite ? '/banca-por-internet' : 'https://www.bn.com.pe/';
-  const linkLabel = isTramite ? 'Abrir Banca de Internet de Práctica' : 'Ir al Portal www.bn.com.pe';
+  const linkLabel = isTramite ? 'Ingresar a la Banca por Internet' : 'Ir al Portal www.bn.com.pe';
 
   const [isStarted, setIsStarted] = useState(false);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);

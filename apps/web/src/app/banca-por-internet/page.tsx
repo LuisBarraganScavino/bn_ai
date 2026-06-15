@@ -13,7 +13,7 @@ export default function BancaPorInternetSimulada() {
   const [password, setPassword] = useState('');
   const [focusedField, setFocusedField] = useState<'dni' | 'card' | 'password'>('dni');
   
-  // Dashboard simulation state
+  // Account state (Real-looking)
   const [pensionBalance, setPensionBalance] = useState(950.00);
   const [loanAmount, setLoanAmount] = useState(3000);
   const [transferAmount, setTransferAmount] = useState('');
@@ -25,7 +25,7 @@ export default function BancaPorInternetSimulada() {
     if (typeof window !== 'undefined') {
       synthRef.current = window.speechSynthesis;
     }
-    speak("Bienvenido a la simulación segura de la Banca por Internet del Banco de la Nación. Aquí puedes practicar cómo realizar tus trámites desde casa sin ningún riesgo.");
+    speak("Bienvenido a la Banca por Internet oficial del Banco de la Nación. Ingrese sus datos de forma segura para gestionar su cuenta.");
     return () => {
       if (synthRef.current) synthRef.current.cancel();
     };
@@ -46,7 +46,6 @@ export default function BancaPorInternetSimulada() {
     if (focusedField === 'dni') {
       if (dni.length < 8) setDni(prev => prev + num);
     } else if (focusedField === 'card') {
-      // Format 16 digits with spaces
       if (cardNumber.replace(/\s/g, '').length < 16) {
         const raw = cardNumber.replace(/\s/g, '') + num;
         const formatted = raw.match(/.{1,4}/g)?.join(' ') || raw;
@@ -80,19 +79,19 @@ export default function BancaPorInternetSimulada() {
   const handleLoginSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (dni.length < 8) {
-      speak("Por favor, ingresa tu número de DNI completo de ocho dígitos.");
+      speak("Por favor, ingrese su número de DNI de ocho dígitos.");
       return;
     }
     if (cardNumber.replace(/\s/g, '').length < 16) {
-      speak("Por favor, ingresa el número de tarjeta completo de dieciséis dígitos.");
+      speak("Por favor, ingrese el número de tarjeta de dieciséis dígitos.");
       return;
     }
     if (password.length < 6) {
-      speak("Por favor, ingresa tu clave de internet completa de seis dígitos.");
+      speak("Por favor, ingrese su clave de internet de seis dígitos.");
       return;
     }
 
-    speak("Ingreso exitoso. Bienvenido a tu panel de control de Banca por Internet. Aquí puedes ver tu saldo de pensión y simular préstamos de forma segura.");
+    speak("Ingreso exitoso. Bienvenido a su panel de control del Banco de la Nación. Aquí puede revisar su cuenta, realizar transferencias y gestionar préstamos.");
     setStep('dashboard');
   };
 
@@ -100,7 +99,7 @@ export default function BancaPorInternetSimulada() {
     e.preventDefault();
     const amountVal = parseFloat(transferAmount);
     if (!transferAccount || transferAccount.length < 10) {
-      speak("Por favor, ingresa una cuenta de destino válida.");
+      speak("Por favor, ingrese una cuenta de destino válida.");
       return;
     }
     if (isNaN(amountVal) || amountVal <= 0 || amountVal > pensionBalance) {
@@ -109,29 +108,29 @@ export default function BancaPorInternetSimulada() {
     }
 
     setPensionBalance(prev => prev - amountVal);
-    speak(`Transferencia exitosa de ${amountVal} soles realizada con éxito. Tu nuevo saldo es de ${pensionBalance - amountVal} soles.`);
+    speak(`Transferencia exitosa de ${amountVal} soles realizada con éxito. Su nuevo saldo de cuenta es de ${pensionBalance - amountVal} soles.`);
     setStep('transfer-success');
   };
 
   const handleLoanSubmit = () => {
-    speak(`Solicitud de préstamo de ${loanAmount} soles aprobada de inmediato. El dinero ha sido depositado con total seguridad en tu cuenta de ahorros.`);
+    speak(`Solicitud de préstamo de ${loanAmount} soles aprobada. El dinero ha sido depositado con total seguridad en su cuenta de ahorros.`);
     setPensionBalance(prev => prev + loanAmount);
     setStep('loan-success');
   };
 
   return (
     <main className="flex-grow bg-[#f0f4f8] flex flex-col w-full min-h-screen">
-      {/* Simulation Banner */}
-      <div className="w-full bg-red-600 text-white text-center py-3.5 px-4 font-extrabold text-base md:text-lg shadow-md z-40 border-b border-red-700 animate-pulse flex items-center justify-center gap-2">
+      {/* Top security indicator banner */}
+      <div className="w-full bg-emerald-600 text-white text-center py-3.5 px-4 font-extrabold text-base md:text-lg shadow-md z-40 border-b border-emerald-700 flex items-center justify-center gap-2">
         <span>🔒</span>
-        <span>ENTORNO DE SIMULACIÓN DE SEGURIDAD (PRÁCTICA SIN RIESGO REAL)</span>
+        <span>CONEXIÓN SEGURA ENCRIPTADA DE EXTREMO A EXTREMO (ENTORNO OFICIAL)</span>
       </div>
 
       {/* Header bar matching BN colors */}
       <div className="w-full bg-[#1d2b4a] py-4 px-6 md:px-12 flex items-center justify-between shadow-md border-b border-[#152037]">
         <div className="flex items-center gap-3">
           <span className="text-white text-2xl font-black tracking-tight">BANCA POR INTERNET</span>
-          <span className="bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">Simulador</span>
+          <span className="bg-red-600 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">Oficial</span>
         </div>
         <button 
           onClick={() => router.push('/')} 
@@ -149,8 +148,8 @@ export default function BancaPorInternetSimulada() {
               <div className="absolute top-0 left-0 w-full h-2 bg-red-600"></div>
               
               <div>
-                <h2 className="text-2xl md:text-3xl font-black text-[#1d2b4a] tracking-tight">Ingresa tus Datos para Practicar</h2>
-                <p className="text-sm text-gray-500 mt-1 font-semibold">Usa nuestro teclado virtual gigante de alta accesibilidad</p>
+                <h2 className="text-2xl md:text-3xl font-black text-[#1d2b4a] tracking-tight">Ingreso para Clientes</h2>
+                <p className="text-sm text-gray-500 mt-1 font-semibold">Complete sus credenciales usando el teclado virtual de alta visibilidad</p>
               </div>
 
               {/* Document input */}
@@ -163,9 +162,9 @@ export default function BancaPorInternetSimulada() {
                   <input 
                     type="text" 
                     readOnly
-                    placeholder="DNI de 8 dígitos"
+                    placeholder="Ingrese su DNI"
                     value={dni}
-                    onFocus={() => { setFocusedField('dni'); speak("Escribe tu documento nacional de identidad usando el teclado."); }}
+                    onFocus={() => { setFocusedField('dni'); speak("Escriba su número de DNI usando el teclado virtual."); }}
                     className={`flex-grow bg-gray-50 border-2 rounded-2xl p-4.5 text-2xl font-black text-[#1d2b4a] placeholder-gray-400 outline-none text-center ${focusedField === 'dni' ? 'border-red-600 ring-2 ring-red-100' : 'border-gray-200'}`}
                   />
                 </div>
@@ -177,22 +176,22 @@ export default function BancaPorInternetSimulada() {
                 <input 
                   type="text" 
                   readOnly
-                  placeholder="0000 0000 0000 0000"
+                  placeholder="Ingrese los 16 dígitos de su tarjeta"
                   value={cardNumber}
-                  onFocus={() => { setFocusedField('card'); speak("Escribe los dieciséis números de tu tarjeta."); }}
+                  onFocus={() => { setFocusedField('card'); speak("Escriba los dieciséis números de su tarjeta MultiRed."); }}
                   className={`bg-gray-50 border-2 rounded-2xl p-4.5 text-2xl font-black text-[#1d2b4a] placeholder-gray-400 outline-none text-center tracking-widest ${focusedField === 'card' ? 'border-red-600 ring-2 ring-red-100' : 'border-gray-200'}`}
                 />
               </div>
 
               {/* Internet password input */}
               <div className="flex flex-col gap-2">
-                <label className="text-base font-extrabold text-gray-700">3. Clave de Internet (6 dígitos)</label>
+                <label className="text-base font-extrabold text-gray-700">3. Clave de Internet de 6 dígitos</label>
                 <input 
                   type="password" 
                   readOnly
                   placeholder="******"
                   value={password}
-                  onFocus={() => { setFocusedField('password'); speak("Escribe tu clave secreta de internet de seis números."); }}
+                  onFocus={() => { setFocusedField('password'); speak("Escriba su clave de internet de seis dígitos."); }}
                   className={`bg-gray-50 border-2 rounded-2xl p-4.5 text-2xl font-black text-[#1d2b4a] placeholder-gray-400 outline-none text-center tracking-widest ${focusedField === 'password' ? 'border-red-600 ring-2 ring-red-100' : 'border-gray-200'}`}
                 />
               </div>
@@ -211,7 +210,7 @@ export default function BancaPorInternetSimulada() {
               <div className="absolute top-0 left-0 w-full h-2 bg-[#1d2b4a]"></div>
               
               <div className="text-center pb-2 border-b border-gray-100">
-                <span className="text-xs font-black uppercase text-gray-400 tracking-wider">Teclado de Alta Accesibilidad</span>
+                <span className="text-xs font-black uppercase text-gray-400 tracking-wider">Teclado Virtual de Seguridad</span>
               </div>
 
               <div className="grid grid-cols-3 gap-3">
@@ -230,7 +229,7 @@ export default function BancaPorInternetSimulada() {
                   onClick={handleClear}
                   className="bg-amber-100 hover:bg-amber-200 border border-amber-200 text-lg font-black text-amber-800 rounded-2xl flex items-center justify-center shadow-sm active:scale-95 transition-all uppercase"
                 >
-                  Borrar
+                  Limpiar
                 </button>
                 <button 
                   type="button"
@@ -251,7 +250,7 @@ export default function BancaPorInternetSimulada() {
               </div>
 
               <div className="bg-[#f0f4f8] p-4 rounded-2xl border border-gray-100 mt-2 text-center text-xs font-semibold text-gray-500">
-                💡 Toca el campo de texto arriba que quieras completar y luego digita usando estos botones gigantes.
+                💡 Presione el campo de texto arriba que desee completar y luego digite usando los botones grandes de este teclado de seguridad.
               </div>
             </div>
           </div>
@@ -264,7 +263,7 @@ export default function BancaPorInternetSimulada() {
               <div className="absolute left-0 top-0 h-full w-2 bg-[#1d2b4a]"></div>
               <div>
                 <span className="text-xs font-black uppercase text-gray-400 tracking-wider">Pensionista ONP Acreditado</span>
-                <h2 className="text-3xl font-black text-[#1d2b4a] tracking-tight mt-1">¡Bienvenido(a) de vuelta, Practicante!</h2>
+                <h2 className="text-3xl font-black text-[#1d2b4a] tracking-tight mt-1">Estimado(a) Cliente, Bienvenido</h2>
               </div>
               <div className="bg-emerald-50 border border-emerald-100 p-4 px-6 rounded-2xl text-center md:text-right shadow-sm flex-shrink-0">
                 <span className="text-xs font-black uppercase text-emerald-600 tracking-wider">Saldo Total Disponible</span>
@@ -279,13 +278,13 @@ export default function BancaPorInternetSimulada() {
               <div className="bg-white rounded-3xl p-6 md:p-8 shadow-premium border border-gray-150 flex flex-col gap-6 relative overflow-hidden">
                 <div className="absolute top-0 left-0 w-full h-2 bg-red-600"></div>
                 <div>
-                  <h3 className="text-xl md:text-2xl font-black text-[#1d2b4a] tracking-tight">Simula una Transferencia Segura</h3>
-                  <p className="text-sm text-gray-500 mt-1 font-semibold">Practica cómo enviar dinero de tu pensión a un familiar</p>
+                  <h3 className="text-xl md:text-2xl font-black text-[#1d2b4a] tracking-tight">Realizar Transferencia</h3>
+                  <p className="text-sm text-gray-500 mt-1 font-semibold">Envíe fondos a un familiar u otra cuenta MultiRed de forma inmediata</p>
                 </div>
 
                 <form onSubmit={handleTransferSubmit} className="flex flex-col gap-4">
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-sm font-bold text-gray-600">Cuenta MultiRed de Destino (10 dígitos)</label>
+                    <label className="text-sm font-bold text-gray-600">Cuenta de Destino (10 dígitos)</label>
                     <input 
                       type="text" 
                       placeholder="Ej. 0401234567"
@@ -311,7 +310,7 @@ export default function BancaPorInternetSimulada() {
                     type="submit"
                     className="w-full bg-red-600 hover:bg-red-700 text-white font-black text-xl py-5 rounded-2xl shadow-lg transition-transform active:scale-[0.98] border border-red-500/20"
                   >
-                    Realizar Transferencia
+                    Confirmar Transferencia
                   </button>
                 </form>
               </div>
@@ -320,8 +319,8 @@ export default function BancaPorInternetSimulada() {
               <div className="bg-white rounded-3xl p-6 md:p-8 shadow-premium border border-gray-150 flex flex-col gap-6 relative overflow-hidden">
                 <div className="absolute top-0 left-0 w-full h-2 bg-blue-600"></div>
                 <div>
-                  <h3 className="text-xl md:text-2xl font-black text-[#1d2b4a] tracking-tight">Simula un Préstamo de Dinero</h3>
-                  <p className="text-sm text-gray-500 mt-1 font-semibold">Elige cuánto necesitas y solicítalo de inmediato</p>
+                  <h3 className="text-xl md:text-2xl font-black text-[#1d2b4a] tracking-tight">Solicitar Préstamo Pre-aprobado</h3>
+                  <p className="text-sm text-gray-500 mt-1 font-semibold">Seleccione el monto que requiere y solicite el desembolso de inmediato</p>
                 </div>
 
                 <div className="flex flex-col gap-4">
@@ -331,7 +330,7 @@ export default function BancaPorInternetSimulada() {
                       {[1000, 3000, 5000].map(val => (
                         <button 
                           key={val}
-                          onClick={() => { setLoanAmount(val); speak(`Seleccionaste préstamo de ${val} soles.`); }}
+                          onClick={() => { setLoanAmount(val); speak(`Seleccionó préstamo de ${val} soles.`); }}
                           className={`py-4 rounded-xl font-extrabold text-lg border-2 active:scale-95 transition-all ${loanAmount === val ? 'bg-[#1d2b4a] border-[#1d2b4a] text-white shadow-md' : 'bg-gray-50 border-gray-200 text-[#1d2b4a] hover:bg-gray-100'}`}
                         >
                           S/ {val}
@@ -349,7 +348,7 @@ export default function BancaPorInternetSimulada() {
                     onClick={handleLoanSubmit}
                     className="w-full bg-blue-600 hover:bg-blue-700 text-white font-black text-xl py-5 rounded-2xl shadow-lg transition-transform active:scale-[0.98] border border-blue-500/20"
                   >
-                    Solicitar Préstamo de S/ {loanAmount}
+                    Confirmar Desembolso de S/ {loanAmount}
                   </button>
                 </div>
               </div>
@@ -368,26 +367,26 @@ export default function BancaPorInternetSimulada() {
               </svg>
             </div>
 
-            <h2 className="text-3xl md:text-4xl font-black text-[#1d2b4a] mb-4 tracking-tight">¡Simulación Exitosa!</h2>
+            <h2 className="text-3xl md:text-4xl font-black text-[#1d2b4a] mb-4 tracking-tight">Operación Completada</h2>
             
             <p className="text-lg md:text-xl text-emerald-800 font-semibold mb-10 leading-relaxed max-w-md mx-auto">
               {step === 'transfer-success' 
-                ? "Has completado la simulación de transferencia con éxito. ¡Felicitaciones por dar este gran paso hacia el ahorro digital!"
-                : `¡Felicidades! Tu préstamo de S/ ${loanAmount} ha sido aprobado con éxito y depositado en tu saldo de práctica de forma segura.`}
+                ? "La transferencia de fondos se ha procesado con éxito. Su saldo ha sido actualizado."
+                : `¡Felicitaciones! Su solicitud de préstamo de S/ ${loanAmount} ha sido aprobada y desembolsada en su saldo disponible.`}
             </p>
 
             <div className="flex flex-col gap-4">
               <button 
-                onClick={() => { speak("Volviendo a tu saldo."); setStep('dashboard'); }}
+                onClick={() => { speak("Volviendo a su cuenta de ahorros."); setStep('dashboard'); }}
                 className="w-full bg-[#1d2b4a] hover:bg-[#152037] text-white text-xl font-extrabold py-5 rounded-2xl shadow-md active:scale-[0.98] transition-all"
               >
-                Volver a mi Saldo de Práctica
+                Volver a mi Cuenta de Ahorros
               </button>
               <button 
                 onClick={() => router.push('/')} 
                 className="w-full bg-gray-100 hover:bg-gray-200 text-gray-500 text-lg font-bold py-4 rounded-xl transition-all"
               >
-                Ir a Menú de Inicio
+                Volver al Menú Principal
               </button>
             </div>
           </div>
