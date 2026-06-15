@@ -9,8 +9,11 @@
     "dev:bot": "pnpm --filter bot dev",
     "dev:web": "pnpm --filter web dev",
     "build": "pnpm -r run build",
-    "start": "pnpm --filter web start",
+    "start": "concurrently \"pnpm --filter bot start\" \"pnpm --filter web start\"",
     "lint": "pnpm -r run lint"
+  },
+  "dependencies": {
+    "concurrently": "^8.2.2"
   },
   "devDependencies": {
     "typescript": "^5.4.5"
