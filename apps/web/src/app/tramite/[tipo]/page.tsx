@@ -55,8 +55,8 @@ export default function TramitePage() {
   const guideData = GUIDES[tipoTramite] || GUIDES['onp'];
 
   const isTramite = tipoTramite === 'prestamo' || tipoTramite === 'onp';
-  const actionLink = isTramite ? 'https://bancaporinternet.bn.com.pe/' : 'https://www.bn.com.pe/';
-  const linkLabel = isTramite ? 'Ir a la Banca por Internet' : 'Ir al Portal www.bn.com.pe';
+  const actionLink = isTramite ? '/banca-por-internet' : 'https://www.bn.com.pe/';
+  const linkLabel = isTramite ? 'Abrir Banca de Internet de Práctica' : 'Ir al Portal www.bn.com.pe';
 
   const [isStarted, setIsStarted] = useState(false);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
